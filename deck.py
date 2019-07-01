@@ -36,6 +36,7 @@ def create_standard():
     cards = deck()
     for s in suit:
         for n in nums:
+        
             cards.add(card(s,n))
 
     cards.add(card('BJ',''))
