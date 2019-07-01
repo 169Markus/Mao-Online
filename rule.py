@@ -12,8 +12,8 @@ class rule():
         self.legality = legality
         self.effect = effect
 
-    def check_legality(self):
-        return self.legality()
+    def check_legality(self,play,gamestate):
+        return self.legality(play,gamestate)
     
     def penalty(self, player, number, message):
         pass
