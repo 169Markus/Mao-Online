@@ -1,10 +1,12 @@
+from random import shuffle
+
 class deck():
     def __init__(self):
         self.cards = []
 
     def shuffle(self):
-        return
-    
+        shuffle(self.cards)
+        
     def add(self,card):
         self.cards.append(card)
 
@@ -15,7 +17,6 @@ class deck():
         '''remove the cards from the deck that are drawn or played'''
         return
 
-    
 
 class draw_deck(deck):
     def __init__(self):
