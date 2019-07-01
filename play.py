@@ -1,7 +1,8 @@
 class play():
-    def __init__(self, user):
+    
+    def __init__(self, user,drawn, cards, said):
         self.user = user
-        self.drawn = []
-        self.played = []
-        self.said = []
+        self.drawn = drawn
+        self.cards = cards
+        self.said = said
 
