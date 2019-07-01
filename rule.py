@@ -9,6 +9,8 @@ class rule_book():
 
 class rule():
     def __init__(self, legality, effect):
+        self.legality = legality
+        self.effect = effect
 
     def check_legality(self):
         return self.legality()
