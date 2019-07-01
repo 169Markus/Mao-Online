@@ -3,6 +3,17 @@ class rule_book():
     def __init__(self):
         self.rules = []
        
+    def addrule(self, rule):
+        rule.effect
+        self.rules.insert(0,rule)
+
+    
+    def checkplay(self, play, game):
+        for rule in self.rules:
+            if(rule(play,gamestate) != 0):
+                return rule(play,gamestate)
+        return 1
+        
     
 
 
@@ -11,7 +22,7 @@ class rule():
         self.legality = legality
         self.effect = effect
 
-    def check_legality(self,play,gamestate):
+    def checklegality(self,play,gamestate):
         return self.legality(play,gamestate)
     
     def penalty(self, player, number, message):
