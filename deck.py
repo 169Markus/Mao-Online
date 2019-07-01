@@ -1,15 +1,15 @@
 class deck():
-    def __init__(self, ty):
+    def __init__(self):
         self.cards = []
 
     def shuffle(self):
         return
     
-    def add(self):
-        return
+    def add(self,card):
+        self.cards.append(card)
 
     def draw(self):
-        return
+        return self.cards.pop()
 
     def remove(self, card):
         '''remove the cards from the deck that are drawn or played'''
@@ -27,17 +27,17 @@ class play_deck(deck):
 
         
 
-def create_cards():
+def create_standard():
     '''create all the cards in a standard deck'''
     nums = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
     suit = ['S', 'H', 'D', 'C']
 
-    cards = []
+    cards = deck()
     for s in suit:
         for n in nums:
-            cards.append(str(s + n))
+            cards.add(card(s,n))
 
-    cards.append('BJ')
-    cards.append('RJ')
-
+    cards.add(card('BJ',''))
+    cards.add(card('RJ',''))
+    cards.shuffle()
     return cards
