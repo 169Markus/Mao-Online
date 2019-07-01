@@ -2,19 +2,16 @@ class rule_book():
     '''keep track of all the rules'''
     def __init__(self):
         self.rules = []
-        
+       
+     
     
 
 
 class rule():
-    def __init__(self):
-        self.id = 0
+    def __init__(self, legality, effect):
 
     def check_legality(self):
-        pass
-
-    def effect(self):
-        pass
+        return self.legality()
     
-    def penalty(self):
+    def penalty(self, player, number, message):
         pass
