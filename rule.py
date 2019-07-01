@@ -3,8 +3,7 @@ class rule_book():
     def __init__(self):
         self.rules = []
         
-    def penalty(self):
-        pass
+    
 
 
 class rule():
@@ -16,4 +15,6 @@ class rule():
 
     def effect(self):
         pass
-
+    
+    def penalty(self):
+        pass
