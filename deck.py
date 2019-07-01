@@ -2,6 +2,21 @@ class deck():
     def __init__(self, ty):
         self.cards = []
 
+    def shuffle(self):
+        return
+    
+    def add(self):
+        return
+
+    def draw(self):
+        return
+
+    def remove(self, card):
+        '''remove the cards from the deck that are drawn or played'''
+        return
+
+    
+
 class draw_deck(deck):
     def __init__(self):
         self.size = 52
