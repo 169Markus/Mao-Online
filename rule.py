@@ -1,4 +1,4 @@
-class rule_book():
+class RuleBook():
     '''keep track of all the rules'''
     def __init__(self):
         self.rules = []
