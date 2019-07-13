@@ -22,5 +22,12 @@ class Game(object):
             player.hand = self.draw_deck.draw(5)
 
     def turn(self):
-        pass
+        # possible mandatory actions first
+
+
+        #
+
+
+        self.whose_turn = self.next_turn(self.whose_turn)
+
 

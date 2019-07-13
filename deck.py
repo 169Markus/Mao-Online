@@ -34,6 +34,9 @@ class Deck(object):
     def remove(self, card: Card):
         self.cards.remove(card)
 
+    @property
+    def peek(self) -> Card:
+        return self.cards[-1]
 
     def create_standard(self, jokers=False):
         """create all the cards in a standard deck"""
