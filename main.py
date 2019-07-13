@@ -1,15 +1,20 @@
-def create_standard():
-    '''create all the cards in a standard deck'''
-    nums = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-    suit = ['S', 'H', 'D', 'C']
+from card import Card
+from deck import Deck
 
-    cards = deck()
-    for s in suit:
-        for n in nums:
-        
-            cards.add(card(s,n))
 
-    cards.add(card('BJ',''))
-    cards.add(card('RJ',''))
-    cards.shuffle()
-    return cards
+def create_standard(jokers=False):
+    """create all the cards in a standard deck"""
+    vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+    suits = ['♠', '♡', '♢', '♣']
+
+    deck = Deck()
+    for v in vals:
+        for s in suits:
+            deck.add(Card(v, s))
+
+    if jokers:
+        deck.add(Card('BJ', 'J'))
+        deck.add(Card('RJ', 'J'))
+
+    deck.shuffle()
+    return deck

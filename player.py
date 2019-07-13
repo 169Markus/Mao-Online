@@ -1,7 +1,5 @@
-class player():
+class Player(object):
     def __init__(self, username):
         self.id = None
         self.username = username
-        self.hand = None  #make an instance of a deck
-
-        
+        self.hand = None  # make an instance of a deck
