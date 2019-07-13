@@ -3,11 +3,11 @@ from card import Card
 
 
 class Deck(object):
-    def __init__(self, standard=True):
+    def __init__(self, prefilled=False):
         self.cards = []
         self.size = 0
 
-        if standard:
+        if prefilled:
             self.create_standard()
 
     def shuffle(self):

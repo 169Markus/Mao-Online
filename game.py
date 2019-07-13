@@ -3,15 +3,17 @@ from player import Player
 
 
 class Game(object):
-    def __init__(self):
+    def __init__(self, players):
         self.state = 'Ongoing'
         self.rule_book = None
-        self.draw_deck = Deck()
-        self.discard_deck = None
-        self.players = None
+        self.draw_deck = Deck(prefilled=True)
+        self.discard_deck = Deck()
+        self.players = players
         self.history = []
         self.play_order = []
         self.turn = []
+
+        self.deal(self.players)
 
 
 
