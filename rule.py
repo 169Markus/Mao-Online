@@ -1,35 +1,42 @@
 from deck import Deck
 from game import Game
 from card import Card
+from play import Play
+from typing import List
 
 
 class Rule(object):
-    def __init__(self, legality, effect):
+    def __init__(self, legality, effect, message="Invalid play", penalty=1):
         self.legality = legality
         self.effect = effect
+        self.message = message
+        self.penalty = penalty
 
-    def card_obeys_rule(self, card, game):
-        return self.legality(card, game)
+    def card_obeys_rule(self, play: Play, game: Game):
+        return self.legality(play, game)
 
-    def penalty(self, player, number, message):
-        pass
 
 class RuleBook(object):
     """Stores all rules"""
 
     def __init__(self):
-        self.rules = []
+        self.rules: List[Rule] = []
 
         # Rule of least precedence must include true and false cases
-        def same_suit(card: Card, game: Game):
-            return card.suit == game.discard_deck.top.suit
+        def same_suit(play: Play, game: Game):
+            return play.cards[0].suit == game.discard_deck.top.suit
 
-        def same_value(card: Card, game: Game):
-            if card.value == game.discard_deck.top.value:
+        def same_value(play: Play, game: Game):
+            if play.cards[0].value == game.discard_deck.top.value:
                 return True
 
-        self.add_rule(Rule(same_suit, None))
-        self.add_rule(Rule(same_value, None))
+        def one_card(play: Play, game: Game):
+            if len(play.cards) > 1:
+                return False
+
+        self.add_rule(Rule(same_suit, None, message="Bad Card"))
+        self.add_rule(Rule(same_value, None, message="Bad Card"))
+        self.add_rule(Rule(one_card, None))
 
     def add_rule(self, rule: Rule):
         self.rules.append(rule)

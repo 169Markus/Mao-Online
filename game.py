@@ -1,21 +1,24 @@
 from deck import Deck
 from player import Player
 from typing import List
+from rule import *
 import random
 
 
 class Game(object):
     def __init__(self, players: List[Player]):
         self.over = False
-        self.rule_book = None
+        self.rule_book = RuleBook()
         self.draw_deck = Deck(prefilled=True)
         self.discard_deck = Deck()
-        self.players = players
+        self.players: List[Player] = players
         self.num_players = len(players)
         self.history = []
         self.play_order = []
         self.whose_turn = random.randrange(self.num_players)
         self.next_turn = lambda x: (x + 1) % self.num_players  # can be overridden by rules
+
+        self.effects = []  # temporary rules; effects on the next player (such as 7).
 
         self.deal()
 
@@ -25,13 +28,28 @@ class Game(object):
 
     def turn(self):
         print("It's %s's turn!" % self.players[self.whose_turn].username)
-        # possible mandatory actions first
+
+        currentPlay = Play()
+
+        # 1. possible mandatory actions first
+        #    i.e., check current active effects
+
+        # 2. can draw whenever
+
+        # 3. go through main rules of the game
+        #    and see which are triggered
+
+        # (here, append the activated rules' effects to the effects list)
+        for rule in self.rule_book.rules:
+            # check if this rule was broken
+            if not rule.card_obeys_rule(currentPlay, self):
+                # 1. do penalty
+                print("PENALTY: " + rule.message)
+                currentPlay.player.givePenalty()  # TODO: Implement this method
 
 
-
-
-
+        # clear effects at the end of a turn
+        # TODO: Decide if we want to support multi-turn effects
+        self.effects = []
 
         self.whose_turn = self.next_turn(self.whose_turn)
-
-
