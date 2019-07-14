@@ -46,8 +46,8 @@ class Game(object):
         # Give appropriate penalties if necessary.
         any_rules_broken = False
         for rule in self.rule_book.rules:
-            if not rule.card_obeys_rule(current_play, self):
-                print("PENALTY: " + rule.message)
+            if not rule.legality(current_play, self):
+                print("PENALTY")
                 current_play.player.givePenalty()  # TODO: Implement this method
                 any_rules_broken = True
 
@@ -55,7 +55,7 @@ class Game(object):
 
         for rule in self.rule_book.rules:
             # get any effect this rule might activate
-            rule_effect = rule.get_effect(current_play, self)
+            rule_effect = rule.player_effects(current_play, self)
 
             # if there is any effect, add it to the list
             # to affect the next player.
@@ -65,6 +65,7 @@ class Game(object):
 
         # clear effects at the end of a turn
         # TODO: Decide if we want to support multi-turn effects
+        # Answer: yes!
         self.effects = []
 
         self.whose_turn = self.next_turn(self.whose_turn)

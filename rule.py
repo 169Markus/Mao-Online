@@ -6,14 +6,24 @@ from typing import List
 
 
 class Rule(object):
-    def __init__(self, legality, get_effect, message="Invalid play", penalty=1):
-        self.legality = legality
-        self.get_effect = get_effect
-        self.message = message
-        self.penalty = penalty
+    """
+    A `Rule` consists of three parts:
 
-    def card_obeys_rule(self, play: Play, game: Game):
-        return self.legality(play, game)
+        * a check of legality [ex. can play any 9 after any 6];
+        * a global effect [ex. reversing turn order]; and
+        * an effect on a sequence of players [ex. next player draws two cards].
+
+
+    Most often, only one or two of the three parts will be implemented.
+
+    The effects are always triggered by 'playing a card'--in particular,
+    ending your turn after playing a card, or playing a card out of turn.
+    """
+
+    def __init__(self, legality, global_effect, player_effects):
+        self.legality = legality
+        self.global_effect = global_effect
+        self.player_effects = player_effects
 
 
 class RuleBook(object):
@@ -34,16 +44,33 @@ class RuleBook(object):
             if len(play.cards) > 1:
                 return False
 
-        self.add_rule(Rule(same_suit, None, message="Bad Card"))
-        self.add_rule(Rule(same_value, None, message="Bad Card"))
-        self.add_rule(Rule(one_card, None))
+        def reverse_play(play: Play, game: Game):
+            if play.cards[0].value == 'Q':
+
+
+        def skip(play: Play, game: Game):
+            if play.cards[0].value == '8':
+
+
+        def draw_two_thanks(play: Play, game: Game):
+            if play.cards[0].value == '7':
+                # require "have a nice day" on current player,
+                # draw two and "thank you" on next player
+
+
+        self.add_rule(Rule(same_suit, None, None))
+        self.add_rule(Rule(same_value, None, None))
+        self.add_rule(Rule(one_card, None, None))
+        self.add_rule(Rule(None, reverse_play, None))
+        self.add_rule(Rule(None, None, skip))
+        self.add_rule(Rule(None, None, draw_two_thanks))
 
     def add_rule(self, rule: Rule):
         self.rules.append(rule)
 
-    def check_played_card(self, card, game):  # Checks if played card is legal
+    def check_played_card(self, play: Play, game: Game):  # Checks if played card is legal
         i = len(self.rules) - 1
-        while self.rules[i].card_obeys_rule(card, game) is None:
+        while self.rules[i].legality(play, game) is None:
             i -= 1
-        return self.rules[i].card_obeys_rule(card, game)
+        return self.rules[i].legality(play, game)
         # we'd better not have an index out of bounds, or else the starting rules are broken

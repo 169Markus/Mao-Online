@@ -48,7 +48,7 @@ class Deck(object):
                 self.add(Card(v, s))
 
         if jokers:
-            self.add(Card('BJ', 'J'))
-            self.add(Card('RJ', 'J'))
+            self.add(Card('B', 'J'))
+            self.add(Card('R', 'J'))
 
         self.shuffle()
