@@ -11,7 +11,7 @@ class Game(object):
         self.draw_deck = Deck(prefilled=True)
         self.discard_deck = Deck()
         self.players = players
-        self.num_players = players.__len__()
+        self.num_players = len(players)
         self.history = []
         self.play_order = []
         self.whose_turn = random.randrange(self.num_players)
