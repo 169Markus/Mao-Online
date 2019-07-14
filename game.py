@@ -40,13 +40,27 @@ class Game(object):
         # 3. go through main rules of the game
         #    and see which are triggered
 
-        # (here, append the activated rules' effects to the effects list)
+        # First, go through all the main rules of the game
+        # (i.e., not temporary ones), and check which of
+        # those rules, if any, the player's play had broken.
+        # Give appropriate penalties if necessary.
+        any_rules_broken = False
         for rule in self.rule_book.rules:
-            # check if this rule was broken
             if not rule.card_obeys_rule(current_play, self):
-                # 1. do penalty
                 print("PENALTY: " + rule.message)
                 current_play.player.givePenalty()  # TODO: Implement this method
+                any_rules_broken = True
+
+        if any_rules_broken: return  # Restart the turn
+
+        for rule in self.rule_book.rules:
+            # get any effect this rule might activate
+            rule_effect = rule.get_effect(current_play, self)
+
+            # if there is any effect, add it to the list
+            # to affect the next player.
+            if rule_effect is not None:
+                self.effects.append(rule_effect)
 
 
         # clear effects at the end of a turn

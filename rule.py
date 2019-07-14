@@ -6,9 +6,9 @@ from typing import List
 
 
 class Rule(object):
-    def __init__(self, legality, effect, message="Invalid play", penalty=1):
+    def __init__(self, legality, get_effect, message="Invalid play", penalty=1):
         self.legality = legality
-        self.effect = effect
+        self.get_effect = get_effect
         self.message = message
         self.penalty = penalty
 
