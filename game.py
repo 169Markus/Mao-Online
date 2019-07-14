@@ -11,11 +11,11 @@ class Game(object):
         self.draw_deck = Deck(prefilled=True)
         self.discard_deck = Deck()
         self.players = players
-        self.num_players = len(players)
+        self.num_players = players.__len__()
         self.history = []
         self.play_order = []
         self.whose_turn = random.randrange(self.num_players)
-        self.next_turn = lambda x: (x + 1) % len(players)  # can be overridden by rules
+        self.next_turn = lambda x: (x + 1) % self.num_players  # can be overridden by rules
 
         self.deal()
 
@@ -26,6 +26,10 @@ class Game(object):
     def turn(self):
         print("It's %s's turn!" % self.players[self.whose_turn].username)
         # possible mandatory actions first
+
+
+
+
 
 
         self.whose_turn = self.next_turn(self.whose_turn)
