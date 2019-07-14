@@ -35,7 +35,7 @@ class Deck(object):
         self.cards.remove(card)
 
     @property
-    def peek(self) -> Card:
+    def top(self) -> Card:
         return self.cards[-1]
 
     def create_standard(self, jokers=False):

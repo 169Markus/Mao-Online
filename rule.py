@@ -22,10 +22,10 @@ class RuleBook(object):
 
         # Rule of least precedence must include true and false cases
         def same_suit(card: Card, game: Game):
-            return card.suit == game.discard_deck.peek.get_suit
+            return card.suit == game.discard_deck.top.suit
 
         def same_value(card: Card, game: Game):
-            if card.value == game.discard_deck.peek.get_value:
+            if card.value == game.discard_deck.top.value:
                 return True
 
         self.add_rule(Rule(same_suit, None))

@@ -1,5 +1,4 @@
 class Play(object):
-
     def __init__(self, player, drawn, cards, said):
         self.player = player # Player
         self.drawn = drawn   # int
