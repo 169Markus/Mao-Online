@@ -6,8 +6,8 @@ from player import Player
 
 
 class Play(object):
-    def __init__(self, player: Player, drawn: int, cards: List[Card], said: List[string]):
-        self.player = player  # Player
-        self.drawn = drawn    # int
-        self.cards = cards    # list of Card
-        self.said = said      # string (list of?)
+    def __init__(self, player: Player):
+        self.player = player
+        self.drawn = 0
+        self.cards: List[Card] = []
+        self.said: List[string] = []

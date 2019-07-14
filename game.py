@@ -27,9 +27,10 @@ class Game(object):
             player.hand = self.draw_deck.draw(5)
 
     def turn(self):
-        print("It's %s's turn!" % self.players[self.whose_turn].username)
+        current_play = Play(self.players[self.whose_turn])
 
-        currentPlay = Play()
+        print("It's %s's turn!" % current_play.player.username)
+
 
         # 1. possible mandatory actions first
         #    i.e., check current active effects
@@ -42,10 +43,10 @@ class Game(object):
         # (here, append the activated rules' effects to the effects list)
         for rule in self.rule_book.rules:
             # check if this rule was broken
-            if not rule.card_obeys_rule(currentPlay, self):
+            if not rule.card_obeys_rule(current_play, self):
                 # 1. do penalty
                 print("PENALTY: " + rule.message)
-                currentPlay.player.givePenalty()  # TODO: Implement this method
+                current_play.player.givePenalty()  # TODO: Implement this method
 
 
         # clear effects at the end of a turn
