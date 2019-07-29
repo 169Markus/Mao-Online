@@ -32,9 +32,13 @@ class RuleBook(object):
     def __init__(self):
         self.rules: List[Rule] = []
 
-        # Rule of least precedence must include true and false cases
+        # Rule of least precedence must always return true or false
+        def can_draw(play: Play, game: Game):
+            return play.drawn > 0
+
         def same_suit(play: Play, game: Game):
-            return play.cards[0].suit == game.discard_deck.top.suit
+            if play.cards[0].suit == game.discard_deck.top.suit:
+                return True
 
         def same_value(play: Play, game: Game):
             if play.cards[0].value == game.discard_deck.top.value:
@@ -46,10 +50,12 @@ class RuleBook(object):
 
         def reverse_play(play: Play, game: Game):
             if play.cards[0].value == 'Q':
+                game.next_turn = lambda x: (x - 1) % game.num_players
 
 
         def skip(play: Play, game: Game):
             if play.cards[0].value == '8':
+                game.whose_turn = game.next_turn(game.whose_turn)
 
 
         def draw_two_thanks(play: Play, game: Game):
@@ -62,7 +68,7 @@ class RuleBook(object):
         self.add_rule(Rule(same_value, None, None))
         self.add_rule(Rule(one_card, None, None))
         self.add_rule(Rule(None, reverse_play, None))
-        self.add_rule(Rule(None, None, skip))
+        self.add_rule(Rule(None, skip, None))
         self.add_rule(Rule(None, None, draw_two_thanks))
 
     def add_rule(self, rule: Rule):
@@ -73,4 +79,4 @@ class RuleBook(object):
         while self.rules[i].legality(play, game) is None:
             i -= 1
         return self.rules[i].legality(play, game)
-        # we'd better not have an index out of bounds, or else the starting rules are broken
+        # The starting rule of least precedence will never be `None`
