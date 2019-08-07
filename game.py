@@ -1,6 +1,4 @@
-from deck import Deck
 from player import Player
-from typing import List
 from rule import *
 import random
 
@@ -57,7 +55,7 @@ class Game(object):
 
         for rule in self.rule_book.rules:
             # get any effect this rule might activate
-            rule_effect = rule.player_effects(current_play, self)
+            rule_effect = rule.effects(current_play, self)
 
             # if there is any effect, add it to the list
             # to affect the next player.

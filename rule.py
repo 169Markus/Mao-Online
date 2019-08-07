@@ -1,6 +1,4 @@
-from deck import Deck
 from game import Game
-from card import Card
 from play import Play
 from typing import List
 
@@ -20,10 +18,9 @@ class Rule(object):
     ending your turn after playing a card, or playing a card out of turn.
     """
 
-    def __init__(self, legality, global_effect, player_effects):
+    def __init__(self, legality, effects):
         self.legality = legality
-        self.global_effect = global_effect
-        self.player_effects = player_effects
+        self.effects = effects
 
 
 class RuleBook(object):
@@ -49,7 +46,7 @@ class RuleBook(object):
                 return False
 
         def in_turn(play: Play, game: Game):
-            if play.player != game.players[whose_turn]:
+            if play.player != game.players[game.whose_turn]:
                 return False
 
 
@@ -63,16 +60,17 @@ class RuleBook(object):
 
         def draw_two_thanks(play: Play, game: Game):
             if play.cards[0].value == '7':
+                pass
                 # require "have a nice day" on current player,
                 # draw two and "thank you" on next player
 
 
-        self.add_rule(Rule(same_suit, None, None))
-        self.add_rule(Rule(same_value, None, None))
-        self.add_rule(Rule(one_card, None, None))
-        self.add_rule(Rule(None, reverse_play, None))
-        self.add_rule(Rule(None, skip, None))
-        self.add_rule(Rule(None, None, draw_two_thanks))
+        self.add_rule(Rule(same_suit, None))
+        self.add_rule(Rule(same_value, None))
+        self.add_rule(Rule(one_card, None))
+        self.add_rule(Rule(None, reverse_play))
+        self.add_rule(Rule(None, skip))
+        self.add_rule(Rule(None, draw_two_thanks))
 
     def add_rule(self, rule: Rule):
         self.rules.append(rule)
