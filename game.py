@@ -16,9 +16,11 @@ class Game(object):
         self.history = []
         self.play_order = []
         self.whose_turn = random.randrange(self.num_players)
-        self.next_turn = lambda x: (x + 1) % self.num_players  # can be overridden by rules
+        self.turn_increment = 1
+        self.next_turn = lambda x: (x + self.turn_increment) % self.num_players
 
         self.effects = []  # temporary rules; effects on the next player (such as 7).
+        # Format: A queue of lists of effects for the nth player after the current one
 
         self.deal()
 

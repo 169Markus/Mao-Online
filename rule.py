@@ -48,15 +48,18 @@ class RuleBook(object):
             if len(play.cards) > 1:
                 return False
 
+        def in_turn(play: Play, game: Game):
+            if play.player != game.players[whose_turn]:
+                return False
+
+
         def reverse_play(play: Play, game: Game):
             if play.cards[0].value == 'Q':
-                game.next_turn = lambda x: (x - 1) % game.num_players
-
+                game.turn_increment *= -1
 
         def skip(play: Play, game: Game):
             if play.cards[0].value == '8':
                 game.whose_turn = game.next_turn(game.whose_turn)
-
 
         def draw_two_thanks(play: Play, game: Game):
             if play.cards[0].value == '7':
@@ -74,7 +77,7 @@ class RuleBook(object):
     def add_rule(self, rule: Rule):
         self.rules.append(rule)
 
-    def check_played_card(self, play: Play, game: Game):  # Checks if played card is legal
+    def check_play(self, play: Play, game: Game):  # Checks if play is legal
         i = len(self.rules) - 1
         while self.rules[i].legality(play, game) is None:
             i -= 1
